@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employee Tracker</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #1a120b;
+    color: #f5ede3;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+  }
+  h1 { font-size: 2rem; margin-bottom: 8px; }
+  h1 span { color: #e0a458; }
+  p.sub { color: #b09a82; margin-bottom: 30px; text-align: center; max-width: 700px; }
+  .videos {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    max-width: 1400px;
+  }
+  .card {
+    background: #2b1e12;
+    border-radius: 16px;
+    padding: 20px;
+    flex: 1 1 420px;
+    max-width: 660px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  }
+  .label {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .label.input { background: #4a3423; color: #d9c3a9; }
+  .label.output { background: #78430f; color: #ffd9a8; }
+  video { width: 100%; border-radius: 10px; display: block; background: #000; }
+  button {
+    margin-top: 26px;
+    padding: 14px 60px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    background: #e0a458;
+    color: #1a120b;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  button:hover { background: #f0be7e; }
+  button:disabled { background: #554433; color: #b09a82; cursor: wait; }
+  #outputCard { display: none; }
+  .features { margin-top: 18px; display: none; flex-wrap: wrap; gap: 8px; justify-content: center; max-width: 900px; }
+  .features span {
+    background: #4a3423; padding: 5px 14px; border-radius: 999px; font-size: 0.8rem; color: #d9c3a9;
+  }
+</style>
+</head>
+<body>
+  <h1>Employee <span>Tracker</span></h1>
+  <p class="sub">AI-powered employee performance tracking for a coffee shop &mdash;
+  uses YOLOv8 to uniquely identify staff and customers, track cups served per employee,
+  and monitor activity through a live camera feed.</p>
+
+  <div class="videos">
+    <div class="card">
+      <span class="label input">INPUT &mdash; Raw camera footage</span>
+      <video id="inputVideo" src="input.mp4" controls muted playsinline></video>
+    </div>
+    <div class="card" id="outputCard">
+      <span class="label output">OUTPUT &mdash; Tracked employees</span>
+      <video id="outputVideo" src="output.mp4" controls muted playsinline></video>
+    </div>
+  </div>
+
+  <button id="analyseBtn">Track Employees &#9654;</button>
+
+  <div class="features" id="features">
+    <span>Person tracking</span><span>Staff vs customer ID</span><span>Cup detection</span>
+    <span>Cups served per staff</span><span>Customer wait time</span>
+  </div>
+
+<script>
+  const btn = document.getElementById('analyseBtn');
+
+  btn.addEventListener('click', () => {
+    btn.disabled = true;
+    btn.textContent = 'Tracking with YOLOv8...';
+    setTimeout(() => {
+      document.getElementById('outputCard').style.display = 'block';
+      document.getElementById('features').style.display = 'flex';
+      const inp = document.getElementById('inputVideo');
+      const out = document.getElementById('outputVideo');
+      inp.currentTime = 0;
+      out.currentTime = 0;
+      inp.play();
+      out.play();
+      btn.textContent = 'Tracking Active';
+    }, 2500);
+  });
+</script>
+</body>
+</html>
